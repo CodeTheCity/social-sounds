@@ -9,5 +9,6 @@
 4. Swiss noise pollution map https://map.geo.admin.ch/mobile.html?zoom=8&bgLayer=ch.swisstopo.pixelkarte-grau&layers=ch.bafu.laerm-strassenlaerm_tag&layers_opacity=0.7&lang=de&topic=bafu&E=2600884.69&N=1199893.56
 5. BBC Sound Effects made available to download for use under RemArc Licence https://sound-effects.bbcrewind.co.uk/
 6. https://codethecity.org/ctc23-the-future-of-the-city/
+7. Challenges and describtion https://docs.google.com/document/d/17bJNSwu89BCaKMrUZXu4HzIg_l6xZYANn2tBHKtwqjo/edit#
 
 
