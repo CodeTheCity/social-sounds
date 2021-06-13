@@ -128,32 +128,82 @@ function interpolateSinebow(t) {
 
 map.on('load', function () {
     noise_layers.forEach(layer => {
-        fetch('geojson/abdn/'+layer+'.geojson')
-        .then(response => response.json())
-        .then(data => {
-            map.addSource(layer, {
-                'type': 'geojson',
-                'data': data
-            });
+        fetch('geojson/abdn/' + layer + '.geojson')
+            .then(response => response.json())
+            .then(data => {
+                map.addSource(layer, {
+                    'type': 'geojson',
+                    'data': data
+                });
 
-            map.addLayer({
-                'id': layer,
-                'type': 'fill',
-                'source': layer,
-                'layout': {
-                    // Make the layer visible by default.
-                    'visibility': 'visible'
+                map.addLayer({
+                    'id': layer,
+                    'type': 'fill',
+                    'source': layer,
+                    'layout': {
+                        // Make the layer visible by default.
+                        'visibility': 'visible'
                     },
-                'paint': {
-                    'fill-color': '#38f',
-                    'fill-opacity': 0.2
-                }
-            });
-        })
-        .catch(err => console.error(err));
+                    'paint': {
+                        'fill-color': '#38f',
+                        'fill-opacity': 0.2
+                    }
+                });
+            })
+            .catch(err => console.error(err));
     });
 
+    // Insert the layer beneath any symbol layer.
+    var layers = map.getStyle().layers;
+    var labelLayerId;
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+            labelLayerId = layers[i].id;
+            break;
+        }
+    }
 
+    // The 'building' layer in the Mapbox Streets
+    // vector tileset contains building height data
+    // from OpenStreetMap.
+    map.addLayer(
+        {
+            'id': 'add-3d-buildings',
+            'source': 'composite',
+            'source-layer': 'building',
+            'filter': ['==', 'extrude', 'true'],
+            'type': 'fill-extrusion',
+            'minzoom': 15,
+            'paint': {
+                'fill-extrusion-color': '#aaa',
+
+                // Use an 'interpolate' expression to
+                // add a smooth transition effect to
+                // the buildings as the user zooms in.
+                'fill-extrusion-height': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'height']
+                ],
+                'fill-extrusion-base': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'min_height']
+                ],
+                'fill-extrusion-opacity': 0.6
+            }
+        },
+
+        labelLayerId
+    );
 
 
     updateOrientations();
@@ -185,12 +235,12 @@ map.on('idle', function () {
                         var clickedLayer = this.textContent;
                         e.preventDefault();
                         e.stopPropagation();
-    
+
                         var visibility = map.getLayoutProperty(
                             clickedLayer,
                             'visibility'
                         );
-    
+
                         // Toggle layer visibility by changing the layout object's visibility property.
                         if (visibility === 'visible') {
                             map.setLayoutProperty(
@@ -208,12 +258,12 @@ map.on('idle', function () {
                             );
                         }
                     };
-    
+
                     var layers = document.getElementById('menu');
                     layers.appendChild(link);
                 }
             }
         }
     });
-   
+
 });
