@@ -10,7 +10,29 @@
     </head>
     <body>
         <div class="container">
-            <canvas id="myChart"></canvas>
+            <div id="mapView">Map
+                <img src="whatcouldbetrain.png">
+            </div>
+            <div id="timeline">Timeline</div>
+            <div id="toolbar">Toolbar
+                <button id="before">Before</button>
+                <button id="after">After</button>
+                Sound Reduction
+                <button id="green-wall">green-wall</button>
+                <button id="trees">trees</button>
+                <label for="lname">Size of Wall</label>
+                <input type="text" id="size-of-wall" name="wall-size"><br><br>
+                
+                
+            </div>
+            <div id="bar-chart">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div id="info-box">Info Box
+                <img src="trees.png">
+            </div>
+            
+
         </div>
 
         <script>
@@ -20,19 +42,16 @@
             //Chart.defaults.global.defaultFontFamily = 'Lato';
             //Chart.defaults.global.defaultFontSize = 18;
             //Chart.defaults.global.defaultFontColor = '#777';
+            let beforeData = [65, 58, 50, 30]
+            let categories = ['Railway', 'Dense Trees', 'Green Wall', 'Combined vegetation']
 
             let massPopChart = new Chart(myChart, {
                 type:'bar', 
                 data: {
-                    labels:['Railway', 'Dense Trees', 'Green Wall', 'Dense trees + Soft Ground Surfaces'],
+                    labels: categories,
                     datasets:[{
                         label: 'Decibels (dB)',
-                        data:[
-                            65,
-                            58,
-                            50,
-                            30,
-                        ],
+                        data: beforeData,
                         backgroundColor:'green',
                         borderWidth:1,
                         borderColor:'#777',
