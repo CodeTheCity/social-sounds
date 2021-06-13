@@ -128,14 +128,24 @@
             background: #3074a4;
         }
     </style>
-     <style>
+    <style>
+        #myChart {
+            width: 80% !important;
+            height: 500px !important;
+        }
+
         #green-wall {
-          display: none;
+            display: none;
         }
+
         #tree-line {
-          display: none;
+            display: none;
         }
-      </style>
+
+        #toolkit {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -146,28 +156,25 @@
 
     <div id="toolkit">
         <div id="timeline">Timeline</div>
-            <div id="toolbar">Toolbar
-                <button id="before">Before</button>
-                <button id="after">After</button>
-                Sound Reduction
-                <button id="green-button" onclick="reply_click(event);">green wall</button>
-                <button id="trees-button" onclick="reply_click(event);">trees line</button>
-                <label for="lname">Size of Wall</label>
-                <input type="text" id="size-of-wall" name="wall-size"><br><br>
+        <div id="toolbar">Toolbar
+            <button id="before">Before</button>
+            <button id="after">After</button>
+            Sound Reduction
+            <button id="green-button" onclick="reply_click(event);">green wall</button>
+            <button id="trees-button" onclick="reply_click(event);">trees line</button>
+            <label for="lname">Size of Wall</label>
+            <input type="text" id="size-of-wall" name="wall-size"><br><br>
 
 
-            </div>
-            <div id="bar-chart">
-                <canvas id="myChart"></canvas>
-            </div>
-            <div id="info-box">Info Box
-                <div id="tree-line">
-                    <img src="graph/trees.png">
-                </div>
-                <div id="green-wall">
-                    <img src="graph/livingwalllondon.jpg">
-                </div>
-            </div>
+        </div>
+        <div id="bar-chart">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div id="info-box">
+            <img src="graph/trees.png" height="300" id="tree-line">
+            <img src="graph/livingwalllondon.jpg" height="300" id="green-wall">
+        </div>
+    </div>
     </div>
 
     <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -190,64 +197,97 @@
     <script>
         let myChart = document.getElementById('myChart').getContext('2d');
 
-// window.onload = function() {
-    let green_wall = document.getElementById('green-wall');
-    let tree_line = document.getElementById('tree-line');
+        // window.onload = function() {
+        let green_wall = document.getElementById('green-wall');
+        let tree_line = document.getElementById('tree-line');
 
-    let buttonCollect = document.getElementById('green-button');
-    console.log(buttonCollect.id)
-  let reply_click = function(a) {
-      console.log('functed called')
-      console.log(a.target.id)
-      if (a.target.id === 'green-button') {
-          console.log('yes tree button')
-          // let tree_line = document.getElementById('tree-line');
-          tree_line.style.display = 'block';
-          green_wall.style.display = 'hidden';
-      } else if (a.target.id === 'trees-button') {
-          console.log('yes wall button')
-          // let tree_line = document.getElementById('green-wall');
-          tree_line.style.display = 'hidden';
-          green_wall.style.display = 'block';
-      }
-  }
-// }
+        let buttonCollect = document.getElementById('green-button');
+        console.log(buttonCollect.id)
+        let reply_click = function (a) {
+            console.log('functed called')
+            console.log(a.target.id)
+            if (a.target.id === 'green-button') {
+                console.log('yes tree button')
+                // let tree_line = document.getElementById('tree-line');
+                tree_line.style.display = 'inline';
+                green_wall.style.display = 'none';
+            } else if (a.target.id === 'trees-button') {
+                console.log('yes wall button')
+                // let tree_line = document.getElementById('green-wall');
+                tree_line.style.display = 'none';
+                green_wall.style.display = 'inline';
+            }
+        }
+        // }
 
 
-// Global Options
-//Chart.defaults.global.defaultFontFamily = 'Lato';
-//Chart.defaults.global.defaultFontSize = 18;
-//Chart.defaults.global.defaultFontColor = '#777';
-let beforeData = [65, 58, 50, 30]
-let categories = ['Railway', 'Dense Trees', 'Green Wall', 'Combined vegetation']
+        // Global Options
+        //Chart.defaults.global.defaultFontFamily = 'Lato';
+        //Chart.defaults.global.defaultFontSize = 18;
+        //Chart.defaults.global.defaultFontColor = '#777';
+        let beforeData = [65, 58, 50, 30]
+        let categories = ['Railway', 'Dense Trees', 'Green Wall', 'Combined vegetation']
 
-let massPopChart = new Chart(myChart, {
-    type:'bar',
-    data: {
-        labels: categories,
-        datasets:[{
-            label: 'Decibels (dB)',
-            data: beforeData,
-            backgroundColor: ['grey', 'green', 'green', 'green'],
-            borderWidth:1,
-            borderColor:'#777',
-            hoverBorderWidth:3,
-            hoverBorderColor:'#238'
-        }]
+        let massPopChart = new Chart(myChart, {
+            type: 'bar',
+            data: {
+                labels: categories,
+                datasets: [{
+                    label: 'Decibels (dB)',
+                    data: beforeData,
+                    backgroundColor: ['grey', 'green', 'green', 'green'],
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#238'
+                }]
 
-    },
-    options: {
-        title:{
-            display:true,
-            text:'Largest Cities in Massachusetts',
-            fontSize:25
-        },
-        //legend:{
-        //    position:'right'
-        //}
-    }
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Largest Cities in Massachusetts',
+                    fontSize: 25
+                },
+                //legend:{
+                //    position:'right'
+                //}
+            }
 
-});
+        });
+    </script>
+    <script>
+var id = 'toolkit';
+                if (document.getElementById(id)) {
+                    // Create a link.
+                    var link = document.createElement('a');
+                    link.id = id + 'toggle';
+                    link.href = '#';
+                    link.textContent = id;
+                    link.className = '';
+                    // Show or hide layer when the toggle is clicked.
+                    link.onclick = function (e) {
+                        var clickedLayer = this.textContent;
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        var display = document.getElementById('toolkit');
+                         
+
+                        // Toggle layer visibility by changing the layout object's visibility property.
+                        if (display.style.display === 'inline') {
+                            display.style.display = 'none';
+                            this.className = '';
+                        } else {
+                            display.style.display = 'inline';
+                            this.className = 'active';
+                        }
+                    };
+
+                    var layers = document.getElementById('menu');
+                    layers.appendChild(link);
+                }
+
     </script>
 </body>
 
