@@ -1,10 +1,10 @@
 // my personal token - please generate your own at https://www.mapbox.com/studio/
-mapboxgl.accessToken = '';
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmV3LWN0Y3QiLCJhIjoiY2twdHViaDY4MHVjaTJ4cDgxano5ajFkcyJ9.L4GGNUYXSeNfHTlVGjjtbQ';
 
 // initialize a Mapbox map with the Basic style, centered in New York
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/andrew-ctct/ckpuzh1iv2g5g17n3s8rdbvti',
     center: [-2.097143, 57.140406],
     zoom: 18,
     hash: true
