@@ -29,6 +29,12 @@
     <script src='https://unpkg.com/cheap-ruler@2.5.1/cheap-ruler.js'></script>
     <script src='https://bundle.run/lineclip@1.1.5'></script>
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"
+        integrity="sha512-g0etrk7svX8WYBp+ZDIqeenmkxQSXjRDTr08ie37rVFc99iXFGxmD0/SCt3kZ6sDNmr8sR0ISHkSAc/M8rQBqg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         body {
             margin: 0;
@@ -150,7 +156,22 @@
         </div>
     </div>
 
+    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+
     <script src="index.js"></script>
+
+    <script>
+        media_file = [
+            "/media/bbc_sheffield-_07032029.mp3",
+            //"/media/bbc_cars---jag_07043142.mp3",
+            "/media/bbc_sheffield-_07032029.mp3"];
+
+        media_file = media_file[Math.random(0, 2)];
+        $("#jquery_jplayer_1").jPlayer("setMedia", {
+            title: "audio",
+            mp3: media_file
+        }).jPlayer("play");
+    </script>
 
     <script>
         let myChart = document.getElementById('myChart').getContext('2d');
