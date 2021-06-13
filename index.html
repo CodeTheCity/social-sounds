@@ -128,6 +128,14 @@
             background: #3074a4;
         }
     </style>
+     <style>
+        #green-wall {
+          display: none;
+        }
+        #tree-line {
+          display: none;
+        }
+      </style>
 </head>
 
 <body>
@@ -138,22 +146,28 @@
 
     <div id="toolkit">
         <div id="timeline">Timeline</div>
-        <div id="toolbar">Toolbar
-            <button id="before">Before</button>
-            <button id="after">After</button>
-            Sound Reduction
-            <button id="green-wall">green-wall</button>
-            <button id="trees">trees</button>
-            <label for="lname">Size of Wall</label>
-            <input type="text" id="size-of-wall" name="wall-size"><br><br>
+            <div id="toolbar">Toolbar
+                <button id="before">Before</button>
+                <button id="after">After</button>
+                Sound Reduction
+                <button id="green-button" onclick="reply_click(event);">green wall</button>
+                <button id="trees-button" onclick="reply_click(event);">trees line</button>
+                <label for="lname">Size of Wall</label>
+                <input type="text" id="size-of-wall" name="wall-size"><br><br>
 
-        </div>
-        <div id="bar-chart">
-            <canvas id="myChart"></canvas>
-        </div>
-        <div id="info-box">Info Box
-            <img src="graph/trees.png">
-        </div>
+
+            </div>
+            <div id="bar-chart">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div id="info-box">Info Box
+                <div id="tree-line">
+                    <img src="graph/trees.png">
+                </div>
+                <div id="green-wall">
+                    <img src="graph/livingwalllondon.jpg">
+                </div>
+            </div>
     </div>
 
     <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -176,40 +190,64 @@
     <script>
         let myChart = document.getElementById('myChart').getContext('2d');
 
-        // Global Options
-        //Chart.defaults.global.defaultFontFamily = 'Lato';
-        //Chart.defaults.global.defaultFontSize = 18;
-        //Chart.defaults.global.defaultFontColor = '#777';
-        let beforeData = [65, 58, 50, 30]
-        let categories = ['Railway', 'Dense Trees', 'Green Wall', 'Combined vegetation']
+// window.onload = function() {
+    let green_wall = document.getElementById('green-wall');
+    let tree_line = document.getElementById('tree-line');
 
-        let massPopChart = new Chart(myChart, {
-            type: 'bar',
-            data: {
-                labels: categories,
-                datasets: [{
-                    label: 'Decibels (dB)',
-                    data: beforeData,
-                    backgroundColor: 'green',
-                    borderWidth: 1,
-                    borderColor: '#777',
-                    hoverBorderWidth: 3,
-                    hoverBorderColor: '#238'
-                }]
+    let buttonCollect = document.getElementById('green-button');
+    console.log(buttonCollect.id)
+  let reply_click = function(a) {
+      console.log('functed called')
+      console.log(a.target.id)
+      if (a.target.id === 'green-button') {
+          console.log('yes tree button')
+          // let tree_line = document.getElementById('tree-line');
+          tree_line.style.display = 'block';
+          green_wall.style.display = 'hidden';
+      } else if (a.target.id === 'trees-button') {
+          console.log('yes wall button')
+          // let tree_line = document.getElementById('green-wall');
+          tree_line.style.display = 'hidden';
+          green_wall.style.display = 'block';
+      }
+  }
+// }
 
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Largest Cities in Massachusetts',
-                    fontSize: 25
-                },
-                //legend:{
-                //    position:'right'
-                //}
-            }
 
-        });
+// Global Options
+//Chart.defaults.global.defaultFontFamily = 'Lato';
+//Chart.defaults.global.defaultFontSize = 18;
+//Chart.defaults.global.defaultFontColor = '#777';
+let beforeData = [65, 58, 50, 30]
+let categories = ['Railway', 'Dense Trees', 'Green Wall', 'Combined vegetation']
+
+let massPopChart = new Chart(myChart, {
+    type:'bar',
+    data: {
+        labels: categories,
+        datasets:[{
+            label: 'Decibels (dB)',
+            data: beforeData,
+            backgroundColor: ['grey', 'green', 'green', 'green'],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#238'
+        }]
+
+    },
+    options: {
+        title:{
+            display:true,
+            text:'Largest Cities in Massachusetts',
+            fontSize:25
+        },
+        //legend:{
+        //    position:'right'
+        //}
+    }
+
+});
     </script>
 </body>
 
