@@ -4,18 +4,20 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmV3LWN0Y3QiLCJhIjoiY2twdHViaDY4MHVjaTJ4c
 // initialize a Mapbox map with the Basic style, centered in New York
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/andrew-ctct/ckpuzh1iv2g5g17n3s8rdbvti',
+    style: 'mapbox://styles/mapbox/streets-v11',
     center: [-2.097143, 57.140406],
     zoom: 18,
     hash: true
 });
 
+var noise_layers = ['noise_road', 'noise_retail', 'noise_rail', 'noise_industrial', 'noise_leisure', 'noise_nightlife', 'noise_shop'];
+
 map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken }), 'bottom-right');
 map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-var h = 300; // size of the chart canvas
+var h = 200; // size of the chart canvas
 var r = h / 2; // radius of the polar histogram
-var numBins = 6; // number of orientation bins spread around 360 deg.
+var numBins = 7; // number of orientation bins spread around 360 deg.
 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -80,7 +82,7 @@ function updateOrientations() {
     var lat = map.getCenter().lat;
     var lng = map.getCenter().lng;
     var bins = new Float64Array(numBins);
-    bins = [10, 14, 56, 32, 3, 8];
+    bins = [10, 14, 56, 32, 3, 8, 0];
     if (lng < -2.098) {
         bins[0] = 20;
     } else {
@@ -125,53 +127,93 @@ function interpolateSinebow(t) {
 }
 
 map.on('load', function () {
+    noise_layers.forEach(layer => {
+        fetch('geojson/abdn/'+layer+'.geojson')
+        .then(response => response.json())
+        .then(data => {
+            map.addSource(layer, {
+                'type': 'geojson',
+                'data': data
+            });
 
-
-    // Add a data source containing GeoJSON data.
-    map.addSource('zone1', {
-        'type': 'geojson',
-        'data': {
-            'type': 'Feature',
-            'geometry': {
-                'type': 'Polygon',
-                'coordinates': [ // Need to end with same as start to complete loop
-                    [
-                        [-2.09882404, 57.14126082],
-                        [-2.09872034, 57.14112577],
-                        [-2.09881391, 57.14103992],
-                        [-2.0993003, 57.1407952],
-                        [-2.09882404, 57.14126082]
-                    ]
-                ]
-            }
-        }
+            map.addLayer({
+                'id': layer,
+                'type': 'fill',
+                'source': layer,
+                'layout': {
+                    // Make the layer visible by default.
+                    'visibility': 'visible'
+                    },
+                'paint': {
+                    'fill-color': '#38f',
+                    'fill-opacity': 0.2
+                }
+            });
+        })
+        .catch(err => console.error(err));
     });
 
-    // Add a new layer to visualize the polygon.
-    map.addLayer({
-        'id': 'zone1',
-        'type': 'fill',
-        'source': 'zone1', // reference the data source
-        'layout': {},
-        'paint': {
-            'fill-color': '#0080ff', // blue color fill
-            'fill-opacity': 0.5
-        }
-    });
-    // Add a black outline around the polygon.
-    map.addLayer({
-        'id': 'outline',
-        'type': 'line',
-        'source': 'zone1',
-        'layout': {},
-        'paint': {
-            'line-color': '#000',
-            'line-width': 3
-        }
-    });
+
+
 
     updateOrientations();
     // update the chart on moveend; we could do that on move,
     // but this is slow on some zoom levels due to a huge amount of roads
     map.on('moveend', updateOrientations);
+});
+
+// After the last frame rendered before the map enters an "idle" state.
+map.on('idle', function () {
+    // If these two layers have been added to the style,
+    // add the toggle buttons.
+    noise_layers.forEach(layer => {
+        if (map.getLayer(layer)) {
+            // Enumerate ids of the layers.
+            var toggleableLayerIds = noise_layers;
+            // Set up the corresponding toggle button for each layer.
+            for (var i = 0; i < toggleableLayerIds.length; i++) {
+                var id = toggleableLayerIds[i];
+                if (!document.getElementById(id)) {
+                    // Create a link.
+                    var link = document.createElement('a');
+                    link.id = id;
+                    link.href = '#';
+                    link.textContent = id;
+                    link.className = 'active';
+                    // Show or hide layer when the toggle is clicked.
+                    link.onclick = function (e) {
+                        var clickedLayer = this.textContent;
+                        e.preventDefault();
+                        e.stopPropagation();
+    
+                        var visibility = map.getLayoutProperty(
+                            clickedLayer,
+                            'visibility'
+                        );
+    
+                        // Toggle layer visibility by changing the layout object's visibility property.
+                        if (visibility === 'visible') {
+                            map.setLayoutProperty(
+                                clickedLayer,
+                                'visibility',
+                                'none'
+                            );
+                            this.className = '';
+                        } else {
+                            this.className = 'active';
+                            map.setLayoutProperty(
+                                clickedLayer,
+                                'visibility',
+                                'visible'
+                            );
+                        }
+                    };
+    
+                    var layers = document.getElementById('menu');
+                    layers.appendChild(link);
+                }
+            }
+        }
+    });
+   
 });
