@@ -26,12 +26,12 @@
                 <button id="before">Before</button>
                 <button id="after">After</button>
                 Sound Reduction
-                <button id="green-button" onclick="reply_click(event);">green-button</button>
-                <button id="trees">trees</button>
+                <button id="green-button" onclick="reply_click(event);">green wall</button>
+                <button id="trees-button" onclick="reply_click(event);">trees line</button>
                 <label for="lname">Size of Wall</label>
                 <input type="text" id="size-of-wall" name="wall-size"><br><br>
-                
-                
+
+
             </div>
             <div id="bar-chart">
                 <canvas id="myChart"></canvas>
@@ -40,8 +40,8 @@
                 <div id="tree-line">
                     <img src="trees.png">
                 </div>
-                <div id="tree-line">
-                    <img src="living_wall_london.jpg">
+                <div id="green-wall">
+                    <img src="livingwalllondon.jpg">
                 </div>
             </div>
         </div>
@@ -49,23 +49,28 @@
         <script>
             let myChart = document.getElementById('myChart').getContext('2d');
 
-            let reply_click = function(a){
-                    console.log(a)
-                    if (a.id === "green-button") {
-                        tree_line.style.display = 'visible';
-                    }
-                }
-
-            window.onload = function() {
+            // window.onload = function() {
                 let green_wall = document.getElementById('green-wall');
                 let tree_line = document.getElementById('tree-line');
 
-                
                 let buttonCollect = document.getElementById('green-button');
-                
                 console.log(buttonCollect.id)
-                
-            }
+              let reply_click = function(a) {
+                  console.log('functed called')
+                  console.log(a.target.id)
+                  if (a.target.id === 'green-button') {
+                      console.log('yes tree button')
+                      // let tree_line = document.getElementById('tree-line');
+                      tree_line.style.display = 'block';
+                      green_wall.style.display = 'hidden';
+                  } else if (a.target.id === 'trees-button') {
+                      console.log('yes wall button')
+                      // let tree_line = document.getElementById('green-wall');
+                      tree_line.style.display = 'hidden';
+                      green_wall.style.display = 'block';
+                  }
+              }
+            // }
 
 
             // Global Options
@@ -76,7 +81,7 @@
             let categories = ['Railway', 'Dense Trees', 'Green Wall', 'Combined vegetation']
 
             let massPopChart = new Chart(myChart, {
-                type:'bar', 
+                type:'bar',
                 data: {
                     labels: categories,
                     datasets:[{
