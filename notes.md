@@ -16,5 +16,6 @@
 11. Challenges and describtion https://docs.google.com/document/d/17bJNSwu89BCaKMrUZXu4HzIg_l6xZYANn2tBHKtwqjo/edit#
 12. How America Bankrupted its Cities https://www.youtube.com/watch?v=7IsMeKl-Sv0 
 13. Make Your City Sound Beautiful https://scape.ch 
+14. js lib for playing music http://jplayer.org/
 
 
