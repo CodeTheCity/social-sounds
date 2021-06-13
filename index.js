@@ -127,6 +127,7 @@ function interpolateSinebow(t) {
 }
 
 map.on('load', function () {
+    var colourIdx = 0;
     noise_layers.forEach(layer => {
         fetch('geojson/abdn/' + layer + '.geojson')
             .then(response => response.json())
@@ -145,10 +146,12 @@ map.on('load', function () {
                         'visibility': 'visible'
                     },
                     'paint': {
-                        'fill-color': '#38f',
+                        'fill-color': interpolateSinebow((2 * colourIdx % numBins) / numBins),
                         'fill-opacity': 0.2
                     }
                 });
+
+                colourIdx = colourIdx + 1;
             })
             .catch(err => console.error(err));
     });
