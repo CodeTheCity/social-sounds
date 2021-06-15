@@ -1,10 +1,14 @@
 # Social Sounds
-[CTC23](https://github.com/CodeTheCity/CTC23) project to help free cities from noise pollution.
 
+## Noise Pollution to Music Culture
+
+[CTC23](https://github.com/CodeTheCity/CTC23) project to help free cities from noise pollution and make your city sounds beautiful.
+
+The concept shows noise levels on a map and a breakdown of what the sources are; and provides evidence on how to change the status quo.
 
 ## Aims
 
-The concept is showing noise levels on map and a breakdown of what the sources are.
+The first phase is to visualize noise pollution data on a map.
 
 The second phase is to allow stakeholders to join the location and say how they are affected.
 
