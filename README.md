@@ -21,3 +21,8 @@ The third phase is to all the suggestion and implementation of solutions to redu
 
 ## Presentation
 [GoogleSlides Deck](https://docs.google.com/presentation/d/1ON2o5qtaoAW66Xr63Bi7IEiA-_0FAfFfqCOKNxmVCnQ/edit?usp=sharing)
+
+
+## Project structure
+
+The [geojson/abdn](https://github.com/CodeTheCity/social-sounds/geojson/abdn) directory contains estimated noise pollution per source type extracted from Lukas Martinelli's [Global Noise Pollution Map](http://lukasmartinelli.ch/gis/2016/04/03/openstreetmap-noise-pollution-map.html). This is used in the first phase of the project to enable the creation of an interactive proof of concept web page.
