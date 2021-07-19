@@ -14,5 +14,10 @@ The second phase is to allow stakeholders to join the location and say how they 
 
 The third phase is to all the suggestion and implementation of solutions to reduce the noise (such as living walls, trees, installations etc.)
 
+## Supporting information
+
+[Notes](https://github.com/CodeTheCity/social-sounds/notes.md) contains reference material and reading lists related to the project.
+
+
 ## Presentation
 [GoogleSlides Deck](https://docs.google.com/presentation/d/1ON2o5qtaoAW66Xr63Bi7IEiA-_0FAfFfqCOKNxmVCnQ/edit?usp=sharing)
