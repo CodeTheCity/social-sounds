@@ -1,0 +1,1 @@
+This directory contains estimated noise pollution per source type extracted from Lukas Martinelli's [Global Noise Pollution Map](http://lukasmartinelli.ch/gis/2016/04/03/openstreetmap-noise-pollution-map.html). This is used in the first phase of the project to enable the creation of an interactive proof of concept web page.
