@@ -16,7 +16,7 @@ The third phase is to all the suggestion and implementation of solutions to redu
 
 ## Supporting information
 
-[Notes](https://github.com/CodeTheCity/social-sounds/notes.md) contains reference material and reading lists related to the project.
+[notes.md](https://github.com/CodeTheCity/social-sounds/notes.md) contains reference material and reading lists related to the project.
 
 
 ## Presentation
